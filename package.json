@@ -11,14 +11,14 @@
     "./sensors": "./src/sensors.js",
     "./renderer": "./src/renderer.js"
   },
-  "files": ["src", "README.md", "LICENSE"],
+  "files": ["src", "README.md", "README.cs.md", "LICENSE"],
   "sideEffects": false,
   "keywords": [
     "liquid", "water", "webgl", "shallow-water", "devicemotion",
     "accelerometer", "tilt", "hero", "animation", "fluid", "simulation"
   ],
   "license": "MIT",
-  "author": "Pavel Železný",
+  "author": "Pavel Železný <pavel@pracovna.cz> (https://pracovna.cz)",
   "repository": { "type": "git", "url": "git+https://github.com/paveljezelezny/slosh.git" },
   "bugs": { "url": "https://github.com/paveljezelezny/slosh/issues" },
   "homepage": "https://github.com/paveljezelezny/slosh#readme",

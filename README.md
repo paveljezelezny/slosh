@@ -1,5 +1,7 @@
 # slosh
 
+**English** · [Česky](README.cs.md)
+
 Liquid in a web page that knows which way is down.
 
 Tilt the phone and it pours to the low side. Shake it and it aerates — bubbles,
@@ -171,8 +173,14 @@ the shader somewhere else, keep them in sync.
 
 MIT. Do what you like with it.
 
----
+## Who made this
 
-*Built while making a hero section for a maker of professional cleaning
-chemistry. The foam behaviour is tuned for detergent rather than water, which
-turned out to be the more interesting problem.*
+**Pavel Železný** — [Pracovna.cz](https://pracovna.cz) | co:produkce, a studio
+building custom websites and applications.
+
+It came out of a hero section for a maker of professional cleaning chemistry.
+The foam is tuned for detergent rather than water, which turned out to be the
+more interesting half of the problem: detergent foam *stays* after the movement
+stops, and that is what sells it as something other than a blue gradient.
+
+Issues and pull requests welcome.
