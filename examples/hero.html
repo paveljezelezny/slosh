@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>slosh — hero section</title>
+<style>
+  *,*::before,*::after { box-sizing: border-box; }
+  body { margin: 0; background: #fff; color: #0b0d10;
+         font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+
+  .hero { position: relative; overflow: hidden; background: #0c2a57; color: #fff;
+          min-height: 82svh; display: flex; align-items: flex-start; }
+  /* The canvas sits behind the copy. pointer-events:none keeps links clickable. */
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%;
+                 display: block; pointer-events: none; }
+  .hero .inner { position: relative; max-width: 1100px; margin: 0 auto;
+                 padding: 84px 24px 120px; }
+  .hero h1 { font-size: clamp(34px, 7vw, 62px); line-height: 1.03;
+             letter-spacing: -.035em; margin: 0 0 18px; max-width: 16ch; }
+  .hero p { max-width: 46ch; margin: 0 0 30px; color: rgba(255,255,255,.72); }
+  .hero a.cta { display: inline-block; background: #fff; color: #0c2a57;
+                padding: 15px 24px; text-decoration: none; font-size: 13px;
+                letter-spacing: .14em; text-transform: uppercase; }
+  /* A scrim keeps the copy readable once the liquid rises behind it. */
+  .hero .inner::before {
+    content: ""; position: absolute; inset: -20px -24px; z-index: -1;
+    background: linear-gradient(180deg, rgba(12,42,87,0) 0%, rgba(12,42,87,.45) 70%);
+  }
+  .after { max-width: 1100px; margin: 0 auto; padding: 64px 24px; }
+</style>
+</head>
+<body>
+  <section class="hero">
+    <canvas id="water"></canvas>
+    <div class="inner">
+      <h1>Liquid that knows which way is down</h1>
+      <p>Tilt the phone and it pours. Shake it and it aerates. On desktop it
+         just breathes quietly — no sensors, no problem.</p>
+      <a class="cta" href="#more">See the code</a>
+    </div>
+  </section>
+
+  <div class="after" id="more">
+    <h2>Anything below keeps working as usual</h2>
+    <p>The canvas is absolutely positioned inside the hero and has
+       <code>pointer-events: none</code>, so it never gets in the way.</p>
+  </div>
+
+  <script type="module">
+    import { createSlosh } from "../src/index.js";
+
+    createSlosh(document.getElementById("water"), {
+      level: 0.42,          // surface a little under half way up the hero
+      intensity: 0.85,
+      colors: { deep: "#0a2a5e", shallow: "#4d9ad6", film: "#dbf0ff" },
+    }).start();
+  </script>
+</body>
+</html>

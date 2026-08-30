@@ -1,0 +1,29 @@
+{
+  "name": "slosh",
+  "version": "0.1.0",
+  "description": "Liquid in a web page that reacts to how you tilt the phone. Shallow-water simulation, WebGL, no dependencies.",
+  "type": "module",
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./liquid": "./src/liquid.js",
+    "./sensors": "./src/sensors.js",
+    "./renderer": "./src/renderer.js"
+  },
+  "files": ["src", "README.md", "LICENSE"],
+  "sideEffects": false,
+  "keywords": [
+    "liquid", "water", "webgl", "shallow-water", "devicemotion",
+    "accelerometer", "tilt", "hero", "animation", "fluid", "simulation"
+  ],
+  "license": "MIT",
+  "author": "Pavel Železný",
+  "repository": { "type": "git", "url": "git+https://github.com/paveljezelezny/slosh.git" },
+  "bugs": { "url": "https://github.com/paveljezelezny/slosh/issues" },
+  "homepage": "https://github.com/paveljezelezny/slosh#readme",
+  "scripts": {
+    "test": "node test/physics.test.js",
+    "dev": "python3 -m http.server 3300"
+  }
+}
