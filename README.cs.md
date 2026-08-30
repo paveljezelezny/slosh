@@ -99,8 +99,15 @@ Plátno dej za text a nastav mu `pointer-events: none`:
 .hero .inner { position: relative; }
 ```
 
-Funkční ukázky jsou v `examples/` — otevři `examples/hero.html` a
-`examples/basic.html` z libovolného statického serveru.
+Funkční ukázky jsou v `examples/`:
+
+- [`mockup.html`](https://paveljezelezny.github.io/slosh/examples/mockup.html) —
+  hotová hero sekce s živým nastavením (hladina, krytí, náklon, čtyři palety)
+  a tlačítkem, které schová UI pro natáčení
+- [`hero.html`](https://paveljezelezny.github.io/slosh/examples/hero.html) —
+  minimální ukázka kapaliny pod textem
+- [`basic.html`](https://paveljezelezny.github.io/slosh/examples/basic.html) —
+  jen plátno a tlačítko Splash
 
 ## Čtyři věci, které se snadno udělají špatně
 

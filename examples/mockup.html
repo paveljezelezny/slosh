@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>slosh — hero mockup</title>
+<meta name="theme-color" content="#07152f">
+<style>
+  @font-face { font-family:'Satoshi'; font-weight:900; font-display:swap;
+    src:url(https://cdn.fontshare.com/wf/NHPGVFYUXYXE33DZ75OIT4JFGHITX5PE/PSUTMASCDJTVPERDYJZPN23BVUFUCQIF/J64QX5IPOHK56I2KYUNBQ5M2XWZEYKYX.woff2) format('woff2'); }
+  @font-face { font-family:'Satoshi'; font-weight:500; font-display:swap;
+    src:url(https://cdn.fontshare.com/wf/P2LQKHE6KA6ZP4AAGN72KDWMHH6ZH3TA/ZC32TK2P7FPS5GFTL46EU6KQJA24ZYDB/7AHDUZ4A7LFLVFUIFSARGIWCRQJHISQP.woff2) format('woff2'); }
+
+  *,*::before,*::after { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg); color: #fff; overflow: hidden;
+    font: 500 16px/1.6 'Satoshi', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent;
+    transition: background .6s ease;
+  }
+  :root { --bg:#07152f; --accent:#5fb0f0; --mono: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  #water { position: fixed; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+  body::before {   /* light from above, so an empty screen is not a flat slab */
+    content:""; position: fixed; inset: 0; pointer-events: none;
+    background: radial-gradient(120% 70% at 50% -10%, rgba(255,255,255,.10) 0%, transparent 62%);
+  }
+
+  .page { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column;
+          max-width: 760px; margin: 0 auto;
+          padding: max(18px, env(safe-area-inset-top)) 22px max(22px, env(safe-area-inset-bottom)); }
+
+  /* --- top bar --- */
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .mark { display: flex; align-items: baseline; gap: 8px; font-weight: 900; letter-spacing: -.04em; font-size: 21px; }
+  .mark i { width: 9px; height: 9px; background: var(--accent); border-radius: 50%; font-style: normal; }
+  nav { display: flex; gap: 18px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+        color: rgba(255,255,255,.55); }
+  nav span:first-child { color: #fff; }
+  @media (max-width: 560px) { nav { display: none; } }
+
+  /* --- hero copy --- */
+  .hero { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 8vh 0 4vh; }
+  .kicker { display: flex; align-items: center; gap: 12px; font-family: var(--mono);
+            font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--accent);
+            margin-bottom: 20px; }
+  .kicker s { width: 30px; height: 1px; background: var(--accent); opacity: .7; }
+  h1 { font-weight: 900; font-size: clamp(38px, 11vw, 74px); line-height: .98; letter-spacing: -.045em;
+       margin: 0 0 20px; max-width: 15ch; }
+  .sub { margin: 0 0 34px; max-width: 42ch; color: rgba(255,255,255,.7); font-size: clamp(15px, 4.2vw, 18px); }
+  .cta { display: flex; gap: 10px; flex-wrap: wrap; }
+  .cta a { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; text-decoration: none;
+           padding: 15px 24px; border: 1px solid rgba(255,255,255,.3); color: #fff;
+           transition: background .25s, color .25s, border-color .25s; }
+  .cta a.solid { background: #fff; color: var(--bg); border-color: #fff; font-weight: 900; }
+  .cta a:hover { border-color: var(--accent); }
+  .cta a.solid:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 14px;
+          font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+          color: rgba(255,255,255,.4);
+          /* room for the settings button, which floats in that corner */
+          padding-right: 54px; }
+
+  /* --- controls, hidden for a clean recording --- */
+  #gear { position: fixed; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); z-index: 3;
+          width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,.3);
+          background: rgba(0,0,0,.35); color: #fff; cursor: pointer; font-size: 15px;
+          backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  #panel { position: fixed; right: 14px; bottom: calc(62px + env(safe-area-inset-bottom)); z-index: 3;
+           width: min(260px, calc(100vw - 28px)); padding: 14px; display: none;
+           background: rgba(4,12,26,.86); border: 1px solid rgba(255,255,255,.16);
+           backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+           font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; }
+  #panel.on { display: block; }
+  #panel label { display: block; margin: 0 0 12px; color: rgba(255,255,255,.62); }
+  #panel input[type=range] { width: 100%; margin-top: 6px; accent-color: var(--accent); }
+  #panel .swatches { display: flex; gap: 7px; margin-top: 4px; }
+  #panel .swatches button { width: 30px; height: 30px; border: 1px solid rgba(255,255,255,.25);
+                            cursor: pointer; padding: 0; }
+  #panel .hidebtn { width: 100%; margin-top: 6px; padding: 9px; cursor: pointer; font: inherit;
+                    background: rgba(255,255,255,.1); color: #fff; border: 1px solid rgba(255,255,255,.25); }
+  body.clean .bar, body.clean .foot, body.clean #gear, body.clean #panel { display: none; }
+</style>
+</head>
+<body>
+  <canvas id="water"></canvas>
+
+  <div class="page">
+    <div class="bar">
+      <div class="mark"><i></i>slosh</div>
+      <nav><span>Docs</span><span>Examples</span><span>GitHub</span></nav>
+    </div>
+
+    <div class="hero">
+      <div class="kicker"><s></s><span id="kick">Tilt · shake · pour</span></div>
+      <h1 id="head">Liquid that knows which way is down</h1>
+      <p class="sub" id="sub">A shallow-water simulation in 128 columns, one WebGL draw call
+        and no dependencies. Nine kilobytes that behave like a glass of water.</p>
+      <div class="cta">
+        <a class="solid" href="https://github.com/paveljezelezny/slosh">Get it</a>
+        <a href="../index.html">Live demo</a>
+      </div>
+    </div>
+
+    <div class="foot"><span>MIT licence</span><span>~9 kB · no deps</span></div>
+  </div>
+
+  <button id="gear" type="button" aria-label="Settings">⚙</button>
+  <div id="panel">
+    <label>Level <span id="vLevel">0.44</span>
+      <input id="level" type="range" min="0.15" max="0.85" step="0.01" value="0.44"></label>
+    <label>Intensity <span id="vInt">0.92</span>
+      <input id="intensity" type="range" min="0.3" max="1" step="0.02" value="0.92"></label>
+    <label>Max tilt <span id="vSlope">0.70</span>
+      <input id="slope" type="range" min="0.2" max="1.2" step="0.05" value="0.7"></label>
+    <label>Palette
+      <span class="swatches" id="swatches"></span></label>
+    <button class="hidebtn" id="hide" type="button">Hide UI for recording</button>
+  </div>
+
+  <script type="module">
+    import { createSlosh } from "../src/index.js";
+
+    const PALETTES = [
+      { name:"deep",   bg:"#07152f", accent:"#5fb0f0", deep:"#0a2a5e", shallow:"#4d9ad6", film:"#dbf0ff" },
+      { name:"teal",   bg:"#04201f", accent:"#4fd6c1", deep:"#063b39", shallow:"#3fbfae", film:"#d6fff8" },
+      { name:"amber",  bg:"#241205", accent:"#f0a63c", deep:"#5a2b06", shallow:"#d98a2b", film:"#ffe9c7" },
+      { name:"ink",    bg:"#0b0b10", accent:"#9aa4ff", deep:"#191a2e", shallow:"#5b5fa8", film:"#e4e6ff" },
+    ];
+
+    let opts = { level:0.44, maxSlope:0.7, intensity:0.92, idleBubbles:1, fallback:"pointer" };
+    let pal = PALETTES[0];
+    let slosh = null;
+
+    function build() {
+      slosh?.destroy();
+      slosh = createSlosh(document.getElementById("water"), {
+        ...opts,
+        colors: { deep: pal.deep, shallow: pal.shallow, film: pal.film },
+      });
+      slosh.start();
+    }
+    function applyPalette(p) {
+      pal = p;
+      document.documentElement.style.setProperty("--bg", p.bg);
+      document.documentElement.style.setProperty("--accent", p.accent);
+      document.querySelector('meta[name=theme-color]').setAttribute("content", p.bg);
+      build();
+    }
+    build();
+
+    // --- controls ---
+    const sw = document.getElementById("swatches");
+    PALETTES.forEach((p) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.title = p.name;
+      b.style.background = `linear-gradient(160deg, ${p.shallow}, ${p.deep})`;
+      b.addEventListener("click", () => applyPalette(p));
+      sw.appendChild(b);
+    });
+
+    const bind = (id, key, out, digits) => {
+      const el = document.getElementById(id);
+      el.addEventListener("input", () => {
+        opts[key] = +el.value;
+        document.getElementById(out).textContent = (+el.value).toFixed(digits);
+        build();
+      });
+    };
+    bind("level", "level", "vLevel", 2);
+    bind("intensity", "intensity", "vInt", 2);
+    bind("slope", "maxSlope", "vSlope", 2);
+
+    document.getElementById("gear").addEventListener("click", () =>
+      document.getElementById("panel").classList.toggle("on"));
+
+    // Hide everything for a clean recording; tap twice anywhere to bring it back.
+    document.getElementById("hide").addEventListener("click", () => {
+      document.body.classList.add("clean");
+      document.getElementById("panel").classList.remove("on");
+    });
+    document.addEventListener("dblclick", () => document.body.classList.remove("clean"));
+  </script>
+</body>
+</html>

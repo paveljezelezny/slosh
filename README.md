@@ -100,8 +100,15 @@ Put the canvas behind your copy and give it `pointer-events: none`:
 .hero .inner { position: relative; }
 ```
 
-Working examples are in `examples/` — open `examples/hero.html` and
-`examples/basic.html` from any static server.
+Working examples live in `examples/`:
+
+- [`mockup.html`](https://paveljezelezny.github.io/slosh/examples/mockup.html) —
+  a finished hero with live controls (level, intensity, tilt, four palettes)
+  and a button that hides the UI so you can record it
+- [`hero.html`](https://paveljezelezny.github.io/slosh/examples/hero.html) —
+  the minimal case: liquid behind copy
+- [`basic.html`](https://paveljezelezny.github.io/slosh/examples/basic.html) —
+  bare canvas and a splash button
 
 ## Four things that are easy to get wrong
 
