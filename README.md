@@ -2,6 +2,12 @@
 
 **English** · [Česky](README.cs.md)
 
+### ▸ [Try it on your phone](https://paveljezelezny.github.io/slosh/)
+
+Open that link on a phone and tilt it. That is the whole pitch.
+
+---
+
 Liquid in a web page that knows which way is down.
 
 Tilt the phone and it pours to the low side. Shake it and it aerates — bubbles,

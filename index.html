@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>slosh — liquid that knows which way is down</title>
+<meta name="description" content="Liquid in a web page that reacts to how you tilt the phone. Shallow-water simulation, WebGL, zero dependencies. Open it on a phone and tilt.">
+<meta name="theme-color" content="#06142e">
+<meta property="og:title" content="slosh">
+<meta property="og:description" content="Liquid in a web page that reacts to how you tilt the phone. Open it on a phone and tilt.">
+<meta property="og:type" content="website">
+<style>
+  *,*::before,*::after { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: #06142e; color: #fff; overflow: hidden;
+    font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent;
+  }
+  #water { position: fixed; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+
+  .wrap {
+    position: relative; z-index: 1; height: 100%;
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: max(28px, env(safe-area-inset-top)) 24px max(28px, env(safe-area-inset-bottom));
+    max-width: 720px; margin: 0 auto;
+  }
+  h1 { font-size: clamp(40px, 12vw, 76px); line-height: .95; letter-spacing: -.045em;
+       margin: 0 0 14px; font-weight: 800; }
+  .lead { margin: 0; max-width: 30ch; color: rgba(255,255,255,.72); font-size: clamp(15px, 4vw, 18px); }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .86em;
+         background: rgba(255,255,255,.1); padding: 2px 6px; }
+
+  .foot { display: flex; flex-direction: column; gap: 16px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  a.btn, button.btn {
+    font: inherit; font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    padding: 14px 20px; border: 1px solid rgba(255,255,255,.32); cursor: pointer;
+    background: rgba(6,20,46,.45); color: #fff; text-decoration: none;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    transition: border-color .2s, background .2s;
+  }
+  a.btn.primary { background: #fff; color: #06142e; border-color: #fff; font-weight: 600; }
+  a.btn:hover, button.btn:hover { border-color: #7fc4ff; }
+  a.btn.primary:hover { background: #d8ecff; }
+
+  .hint { font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase;
+          color: rgba(255,255,255,.5); margin: 0; }
+  .hint b { color: #7fc4ff; font-weight: 600; }
+</style>
+</head>
+<body>
+  <canvas id="water"></canvas>
+
+  <div class="wrap">
+    <div>
+      <h1>slosh</h1>
+      <p class="lead">Liquid in a web page that knows which way is down.
+        Tilt it, shake it. <code>~9 kB</code>, no dependencies.</p>
+    </div>
+
+    <div class="foot">
+      <p class="hint" id="hint">Loading…</p>
+      <div class="row">
+        <a class="btn primary" href="https://github.com/paveljezelezny/slosh">GitHub</a>
+        <button class="btn" id="splash" type="button">Splash</button>
+        <a class="btn" href="./examples/hero.html">Hero example</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createSlosh } from "./src/index.js";
+
+    const slosh = createSlosh(document.getElementById("water"), {
+      level: 0.44,
+      maxSlope: 0.7,
+      intensity: 0.92,
+      fallback: "pointer",
+    });
+    slosh.start();
+
+    document.getElementById("splash").addEventListener("click", () => slosh.splash(1));
+
+    const hint = document.getElementById("hint");
+    const coarse = matchMedia("(pointer: coarse)").matches;
+    if (slosh.status() === "waiting") {
+      hint.innerHTML = "Tap anywhere to <b>allow motion</b>, then tilt";
+    } else if (coarse) {
+      hint.innerHTML = "<b>Tilt</b> your phone · <b>shake</b> it";
+    } else {
+      hint.innerHTML = "Move your cursor · <b>open on a phone</b> for the real thing";
+    }
+  </script>
+</body>
+</html>

@@ -21,7 +21,7 @@
   "author": "Pavel Železný <pavel@pracovna.cz> (https://pracovna.cz)",
   "repository": { "type": "git", "url": "git+https://github.com/paveljezelezny/slosh.git" },
   "bugs": { "url": "https://github.com/paveljezelezny/slosh/issues" },
-  "homepage": "https://github.com/paveljezelezny/slosh#readme",
+  "homepage": "https://paveljezelezny.github.io/slosh/",
   "scripts": {
     "test": "node test/physics.test.js",
     "dev": "python3 -m http.server 3300"

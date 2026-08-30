@@ -2,6 +2,12 @@
 
 [English](README.md) · **Česky**
 
+### ▸ [Vyzkoušet na telefonu](https://paveljezelezny.github.io/slosh/)
+
+Otevři ten odkaz na mobilu a nakloň ho. To je celá pointa.
+
+---
+
 Kapalina na webu, která ví, kudy je dolů.
 
 Nakloň telefon a přeleje se ke spodní straně. Zatřes s ním a promísí se se
